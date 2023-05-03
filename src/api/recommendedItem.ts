@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const GET_REC_ITEMS_ENDPOINT = '/api/v1/search-conditions/';
+
 const getRecommendedItemListAPI = async (name: string) => {
   console.info('calling api');
   try {
