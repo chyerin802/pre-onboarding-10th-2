@@ -1,6 +1,17 @@
 import React, { useEffect, useRef, useState, ChangeEvent, FormEvent } from 'react';
 import RecommendedItemList from './RecommendedItemList';
 
+const dummyItems = [
+  {
+    name: '갑상선암',
+    id: 4373,
+  },
+  {
+    name: '갑상선염',
+    id: 4376,
+  },
+];
+
 function SearchInputBox() {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const [searchWord, setSearchWord] = useState('');
@@ -30,7 +41,7 @@ function SearchInputBox() {
         <input type="text" id="word" ref={searchInputRef} value={searchWord} onChange={changeHandler} />
         <button type="submit">검색</button>
       </form>
-      <RecommendedItemList />
+      <RecommendedItemList items={dummyItems} />
     </div>
   );
 }
