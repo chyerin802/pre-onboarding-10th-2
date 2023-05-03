@@ -1,8 +1,9 @@
 export type RecItem = {
-  id: number;
   name: string;
+  id: number;
 };
 
 export type RecItemListProps = {
   items: RecItem[];
+  selectedItem: number;
 };
