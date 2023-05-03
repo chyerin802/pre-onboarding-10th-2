@@ -1,10 +1,11 @@
 import React from 'react';
-import './App.css';
+import SearchInputBox from '@components/SearchInputBox';
 
 function App() {
   return (
     <div className="App">
-      hello
+      <h1>국내 모든 임상 시험 검색하고 온라인으로 참여하기</h1>
+      <SearchInputBox />
     </div>
   );
 }
