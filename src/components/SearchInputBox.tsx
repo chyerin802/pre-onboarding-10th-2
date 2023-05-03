@@ -16,6 +16,7 @@ function SearchInputBox() {
   const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchWord(event.target.value);
     setSelectedItem(-1);
+    setRecommendedItems([]);
   };
 
   // 검색어 form 제출 시 실행되는 onSubmit 핸들러 함수
