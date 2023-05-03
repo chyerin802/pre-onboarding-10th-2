@@ -8,7 +8,6 @@ function SearchInputBox() {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const [recommendedItems, setRecommendedItems] = useState<RecItem[]>([]);
   const [searchWord, setSearchWord] = useState('');
-  // TODO: selectedItem states는 RecommendedList 로 옮기기
   const [selectedItem, setSelectedItem] = useState(-1);
 
   const debouncedSearchWord = useDebounce(searchWord, 500);
@@ -16,6 +15,7 @@ function SearchInputBox() {
   // 검색어 input값의 변화를 다루는 onChange 핸들러 함수
   const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchWord(event.target.value);
+    setSelectedItem(-1);
   };
 
   // 검색어 form 제출 시 실행되는 onSubmit 핸들러 함수
@@ -78,8 +78,9 @@ function SearchInputBox() {
       }
     };
 
+    if (selectedItem > -1) return;
     getRecommendItemsAsync();
-  }, [debouncedSearchWord]);
+  }, [debouncedSearchWord, selectedItem]);
 
   return (
     <div>
@@ -88,6 +89,7 @@ function SearchInputBox() {
         <input
           type="text"
           id="word"
+          autoComplete="off"
           ref={searchInputRef}
           value={searchWord}
           onChange={changeHandler}
