@@ -50,6 +50,7 @@
     "@commitlint/cli": "^17.6.1",
     "@commitlint/config-conventional": "^17.6.1",
     "@craco/craco": "^7.1.0",
+    "@types/styled-components": "^5.1.26",
     "craco-alias": "^3.0.1",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-html": "^7.1.0",
