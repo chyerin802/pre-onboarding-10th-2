@@ -8,6 +8,7 @@ function SearchInputBox() {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const [recommendedItems, setRecommendedItems] = useState<RecItem[]>([]);
   const [searchWord, setSearchWord] = useState('');
+  // TODO: selectedItem states는 RecommendedList 로 옮기기
   const [selectedItem, setSelectedItem] = useState(-1);
 
   const debouncedSearchWord = useDebounce(searchWord, 500);
@@ -22,7 +23,7 @@ function SearchInputBox() {
     event.preventDefault();
 
     if (searchWord.trim().length === 0) return;
-    console.log(searchWord);
+    alert(`${searchWord}를 검색함!`);
   };
 
   // 검색어 목록 아이템 위아래 화살표로 이동 가능하도록 하는 onKeyUp 핸들러 함수
@@ -45,10 +46,16 @@ function SearchInputBox() {
     }
   };
 
-  // 추천검색어 클릭 시 검색어 (searchWord) 변경 onClick 핸들러 함수
+  // 추천검색어 클릭 시 해당 검색어 검색 onClick 핸들러 함수
   const clickHandler = (itemIndex: number) => {
+    const newWord = recommendedItems[itemIndex].name;
+    setSearchWord(newWord);
+    alert(`${newWord}를 검색함!`);
+  };
+
+  // 추천 목록에 마우스 hover 했을 때 핸들러 함수
+  const mouseOverHandler = (itemIndex: number) => {
     setSelectedItem(itemIndex);
-    setSearchWord(recommendedItems[itemIndex].name);
   };
 
   // 처음 렌더링 시 input 창에 focus
@@ -89,7 +96,12 @@ function SearchInputBox() {
         <button type="submit">검색</button>
       </form>
       <div>{debouncedSearchWord}</div>
-      <RecommendedItemList items={recommendedItems} selectedItem={selectedItem} selectItem={clickHandler} />
+      <RecommendedItemList
+        items={recommendedItems}
+        selectedItem={selectedItem}
+        selectItem={clickHandler}
+        hoverItem={mouseOverHandler}
+      />
     </div>
   );
 }
