@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, ChangeEvent } from 'react';
+import React, { useEffect, useRef, useState, ChangeEvent, FormEvent } from 'react';
 import RecommendedItemList from './RecommendedItemList';
 
 function SearchInputBox() {
@@ -10,6 +10,14 @@ function SearchInputBox() {
     setSearchWord(event.target.value);
   };
 
+  // 검색어 form 제출 시 실행되는 onSubmit 핸들러 함수
+  const submitHandler = (event: FormEvent) => {
+    event.preventDefault();
+
+    if (searchWord.trim().length === 0) return;
+    console.log(searchWord);
+  };
+
   // 처음 렌더링 시 input 창에 focus
   useEffect(() => {
     searchInputRef.current!.focus();
@@ -17,12 +25,11 @@ function SearchInputBox() {
 
   return (
     <div>
-      <form>
+      <form onSubmit={submitHandler}>
         <label htmlFor="word">search icon</label>
         <input type="text" id="word" ref={searchInputRef} value={searchWord} onChange={changeHandler} />
         <button type="submit">검색</button>
       </form>
-      <div>{searchWord}</div>
       <RecommendedItemList />
     </div>
   );
