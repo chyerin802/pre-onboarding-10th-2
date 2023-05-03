@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, ChangeEvent, FormEvent, KeyboardEvent } from 'react';
 import getRecommendedItemListAPI from '@api/recommendedItem';
 import { RecItem } from '@type/recommendedItem';
+import useDebounce from '@hooks/useDebounce';
 import RecommendedItemList from './RecommendedItemList';
 
 function SearchInputBox() {
@@ -9,19 +10,11 @@ function SearchInputBox() {
   const [searchWord, setSearchWord] = useState('');
   const [selectedItem, setSelectedItem] = useState(-1);
 
-  // 검색어 input값의 변화를 다루는 onChange 핸들러 함수
-  const changeHandler = async (event: ChangeEvent<HTMLInputElement>) => {
-    const newWord = event.target.value.trim();
-    setSearchWord(event.target.value);
+  const debouncedSearchWord = useDebounce(searchWord, 500);
 
-    try {
-      if (newWord.length !== 0) {
-        const res = await getRecommendedItemListAPI(newWord);
-        setRecommendedItems(res);
-      }
-    } catch (e) {
-      console.error(e);
-    }
+  // 검색어 input값의 변화를 다루는 onChange 핸들러 함수
+  const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchWord(event.target.value);
   };
 
   // 검색어 form 제출 시 실행되는 onSubmit 핸들러 함수
@@ -63,6 +56,24 @@ function SearchInputBox() {
     searchInputRef.current!.focus();
   }, []);
 
+  // 검색어 변화에 따른 추천 검색어 요청
+  useEffect(() => {
+    // 최종적으로 결정된 검색어에 해당하는 목록을 불러온다.
+    const getRecommendItemsAsync = async () => {
+      const searchName = debouncedSearchWord.trim();
+      try {
+        if (searchName.length !== 0) {
+          const res = await getRecommendedItemListAPI(searchName);
+          setRecommendedItems(res);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    getRecommendItemsAsync();
+  }, [debouncedSearchWord]);
+
   return (
     <div>
       <form onSubmit={submitHandler}>
@@ -77,6 +88,7 @@ function SearchInputBox() {
         />
         <button type="submit">검색</button>
       </form>
+      <div>{debouncedSearchWord}</div>
       <RecommendedItemList items={recommendedItems} selectedItem={selectedItem} selectItem={clickHandler} />
     </div>
   );
