@@ -1,22 +1,12 @@
-// eslint-disable-next-line no-promise-executor-return
-const wait = (timeToDelay: number) => new Promise(resolve => setTimeout(resolve, timeToDelay));
+import axios from 'axios';
 
-const dummyItems = [
-  {
-    name: '갑상선암',
-    id: 4373,
-  },
-  {
-    name: '갑상선염',
-    id: 4376,
-  },
-];
+const GET_REC_ITEMS_ENDPOINT = '/api/v1/search-conditions/';
 
-const getRecommendedItemListAPI = async (word: string) => {
-  console.log(word, ' 가져올거임');
+const getRecommendedItemListAPI = async (name: string) => {
+  console.info('calling api');
   try {
-    await wait(3000);
-    return dummyItems;
+    const res = await axios.get(GET_REC_ITEMS_ENDPOINT, { params: { name } });
+    return res.data;
   } catch (e) {
     console.error(e);
     throw e;
