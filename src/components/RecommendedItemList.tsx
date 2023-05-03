@@ -1,5 +1,6 @@
 import React from 'react';
 import { RecItemListProps } from '@type/recommendedItem';
+import RecommendedItem from '@styles/recommendedItemList.style';
 
 function RecommendedItemList({ items }: RecItemListProps) {
   return (
@@ -9,7 +10,7 @@ function RecommendedItemList({ items }: RecItemListProps) {
       ) : (
         <ul>
           {items.map(item => (
-            <li key={item.id}>{item.name}</li>
+            <RecommendedItem key={item.id}>{item.name}</RecommendedItem>
           ))}
         </ul>
       )}

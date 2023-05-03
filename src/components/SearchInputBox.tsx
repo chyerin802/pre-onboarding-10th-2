@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, ChangeEvent, FormEvent } from 'react';
-import RecommendedItemList from '@components/recommendedItemList';
+import RecommendedItemList from './RecommendedItemList';
 
 const dummyItems = [
   {
