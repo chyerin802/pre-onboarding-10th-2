@@ -2,7 +2,7 @@ import React from 'react';
 import { RecItemListProps } from '@type/recommendedItem';
 import RecommendedItem from '@styles/recommendedItemList.style';
 
-function RecommendedItemList({ items, selectedItem, selectItem }: RecItemListProps) {
+function RecommendedItemList({ items, selectedItem, selectItem, hoverItem }: RecItemListProps) {
   return (
     <div>
       {items.length === 0 ? (
@@ -13,7 +13,8 @@ function RecommendedItemList({ items, selectedItem, selectItem }: RecItemListPro
             <RecommendedItem
               key={item.id}
               className={selectedItem === index ? 'selected' : ''}
-              onClick={() => selectItem(index)}>
+              onClick={() => selectItem(index)}
+              onMouseOver={() => hoverItem(index)}>
               {item.name}
             </RecommendedItem>
           ))}
