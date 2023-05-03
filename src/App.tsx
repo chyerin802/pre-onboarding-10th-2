@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchInputBox from '@components/searchInputBox';
+import SearchInputBox from '@components/SearchInputBox';
 
 function App() {
   return (
