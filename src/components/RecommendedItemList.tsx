@@ -2,7 +2,7 @@ import React from 'react';
 import { RecItemListProps } from '@type/recommendedItem';
 import RecommendedItem from '@styles/recommendedItemList.style';
 
-function RecommendedItemList({ items, selectedItem }: RecItemListProps) {
+function RecommendedItemList({ items, selectedItem, selectItem }: RecItemListProps) {
   return (
     <div>
       {items.length === 0 ? (
@@ -10,7 +10,10 @@ function RecommendedItemList({ items, selectedItem }: RecItemListProps) {
       ) : (
         <ul>
           {items.map((item, index) => (
-            <RecommendedItem key={item.id} className={selectedItem === index ? 'selected' : ''}>
+            <RecommendedItem
+              key={item.id}
+              className={selectedItem === index ? 'selected' : ''}
+              onClick={() => selectItem(index)}>
               {item.name}
             </RecommendedItem>
           ))}

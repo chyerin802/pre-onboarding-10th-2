@@ -52,6 +52,12 @@ function SearchInputBox() {
     }
   };
 
+  // 추천검색어 클릭 시 검색어 (searchWord) 변경 onClick 핸들러 함수
+  const clickHandler = (itemIndex: number) => {
+    setSelectedItem(itemIndex);
+    setSearchWord(recommendedItems[itemIndex].name);
+  };
+
   // 처음 렌더링 시 input 창에 focus
   useEffect(() => {
     searchInputRef.current!.focus();
@@ -71,7 +77,7 @@ function SearchInputBox() {
         />
         <button type="submit">검색</button>
       </form>
-      <RecommendedItemList items={recommendedItems} selectedItem={selectedItem} />
+      <RecommendedItemList items={recommendedItems} selectedItem={selectedItem} selectItem={clickHandler} />
     </div>
   );
 }

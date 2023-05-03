@@ -6,4 +6,5 @@ export type RecItem = {
 export type RecItemListProps = {
   items: RecItem[];
   selectedItem: number;
+  selectItem: (selectIndex: number) => void;
 };
