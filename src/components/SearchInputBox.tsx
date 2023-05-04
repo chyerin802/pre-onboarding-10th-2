@@ -72,6 +72,8 @@ function SearchInputBox() {
         if (searchName.length !== 0) {
           const res = await getRecommendedItemListAPI(searchName);
           setRecommendedItems(res);
+        } else {
+          setRecommendedItems([]);
         }
       } catch (e) {
         console.error(e);
