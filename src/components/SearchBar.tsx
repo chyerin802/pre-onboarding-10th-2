@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, ChangeEvent, FormEvent, KeyboardEve
 import getRecommendedItemListAPI from '@api/recommendedItem';
 import { RecItem } from '@type/recommendedItem';
 import useDebounce from '@hooks/useDebounce';
+import useOnClickOutside from '@hooks/useOnClickOutside';
 import * as S from '@styles/SearchBar.style';
 import { AiOutlineSearch } from 'react-icons/ai';
 import RecommendedItemList from './RecommendedItemList';
@@ -9,11 +10,16 @@ import RecommendedItemList from './RecommendedItemList';
 const MAX_REC_ITEMS_LENGTH = 7;
 
 function SearchBar() {
-  const searchInputRef = useRef<HTMLInputElement>(null);
+  const searchBarRef = useRef<HTMLDivElement>(null);
   const [recommendedItems, setRecommendedItems] = useState<RecItem[]>([]);
   const [searchWord, setSearchWord] = useState('');
   const [selectedItem, setSelectedItem] = useState(-1);
+  const [isRecommendListOpen, setIsRecommendListOpen] = useState(false);
 
+  // searchBar 외부를 클릭하면 검색어 목록 닫힘
+  useOnClickOutside(searchBarRef, () => {
+    setIsRecommendListOpen(false);
+  });
   const debouncedSearchWord = useDebounce(searchWord, 500);
 
   // 최종적으로 결정된 검색어에 해당하는 목록을 불러온다.
@@ -71,6 +77,8 @@ function SearchBar() {
     getRecommendItemsAsync(newWord);
   };
 
+  const inputFocusHandler = () => setIsRecommendListOpen(true);
+
   // 추천 목록에 마우스 hover 했을 때 핸들러 함수
   const mouseOverHandler = (itemIndex: number) => {
     setSelectedItem(itemIndex);
@@ -83,7 +91,7 @@ function SearchBar() {
   }, [debouncedSearchWord, getRecommendItemsAsync, selectedItem]);
 
   return (
-    <S.SearchBar>
+    <S.SearchBar ref={searchBarRef}>
       <S.SearchForm onSubmit={submitHandler}>
         <S.SearchInputBox>
           <label htmlFor="word">
@@ -94,22 +102,24 @@ function SearchBar() {
             id="word"
             autoComplete="off"
             placeholder="질환명을 입력해 주세요"
-            ref={searchInputRef}
             value={searchWord}
             onChange={changeHandler}
             onKeyUp={keyUpHandler}
+            onFocus={inputFocusHandler}
           />
         </S.SearchInputBox>
         <S.SearchFormBtn type="submit">
           <AiOutlineSearch />
         </S.SearchFormBtn>
       </S.SearchForm>
-      <RecommendedItemList
-        items={recommendedItems}
-        selectedItem={selectedItem}
-        selectItem={clickHandler}
-        hoverItem={mouseOverHandler}
-      />
+      {isRecommendListOpen ? (
+        <RecommendedItemList
+          items={recommendedItems}
+          selectedItem={selectedItem}
+          selectItem={clickHandler}
+          hoverItem={mouseOverHandler}
+        />
+      ) : null}
     </S.SearchBar>
   );
 }

@@ -2,6 +2,9 @@ import styled from 'styled-components';
 
 const SearchLayOut = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   min-height: 100vh;
   padding-top: 5rem;
   background-color: var(--bg-color);

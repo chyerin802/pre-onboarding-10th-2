@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const SearchBar = styled.div`
-  width: 100%;
+  width: 30rem;
   display: flex;
   flex-direction: column;
   align-items: center;
