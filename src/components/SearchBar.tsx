@@ -2,9 +2,11 @@ import React, { useEffect, useRef, useState, ChangeEvent, FormEvent, KeyboardEve
 import getRecommendedItemListAPI from '@api/recommendedItem';
 import { RecItem } from '@type/recommendedItem';
 import useDebounce from '@hooks/useDebounce';
+import * as S from '@styles/SearchBar.style';
+import { AiOutlineSearch } from 'react-icons/ai';
 import RecommendedItemList from './RecommendedItemList';
 
-function SearchInputBox() {
+function SearchBar() {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const [recommendedItems, setRecommendedItems] = useState<RecItem[]>([]);
   const [searchWord, setSearchWord] = useState('');
@@ -85,29 +87,35 @@ function SearchInputBox() {
   }, [debouncedSearchWord, selectedItem]);
 
   return (
-    <div>
-      <form onSubmit={submitHandler}>
-        <label htmlFor="word">search icon</label>
-        <input
-          type="text"
-          id="word"
-          autoComplete="off"
-          ref={searchInputRef}
-          value={searchWord}
-          onChange={changeHandler}
-          onKeyUp={keyUpHandler}
-        />
-        <button type="submit">검색</button>
-      </form>
-      <div>{debouncedSearchWord}</div>
+    <S.SearchBar>
+      <S.SearchForm onSubmit={submitHandler}>
+        <S.SearchInputBox>
+          <label htmlFor="word">
+            <AiOutlineSearch />
+          </label>
+          <input
+            type="text"
+            id="word"
+            autoComplete="off"
+            placeholder="질환명을 입력해 주세요"
+            ref={searchInputRef}
+            value={searchWord}
+            onChange={changeHandler}
+            onKeyUp={keyUpHandler}
+          />
+        </S.SearchInputBox>
+        <S.SearchFormBtn type="submit">
+          <AiOutlineSearch />
+        </S.SearchFormBtn>
+      </S.SearchForm>
       <RecommendedItemList
         items={recommendedItems}
         selectedItem={selectedItem}
         selectItem={clickHandler}
         hoverItem={mouseOverHandler}
       />
-    </div>
+    </S.SearchBar>
   );
 }
 
-export default SearchInputBox;
+export default SearchBar;

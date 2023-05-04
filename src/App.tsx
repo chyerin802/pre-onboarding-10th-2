@@ -1,11 +1,12 @@
 import React from 'react';
-import SearchInputBox from '@components/SearchInputBox';
+import GlobalStyle from '@styles/GlobalStyle';
+import Search from '@pages/Search';
 
 function App() {
   return (
     <div className="App">
-      <h1>국내 모든 임상 시험 검색하고 온라인으로 참여하기</h1>
-      <SearchInputBox />
+      <GlobalStyle />
+      <Search />
     </div>
   );
 }
