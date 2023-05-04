@@ -2,7 +2,7 @@ import { RecItem } from '@type/recommendedItem';
 import { getLocalItemListWithExpiry, setLocalItemListWithExpiry } from './localStorage';
 
 const CACHE_KEY_NAME = 'cachedRecItems';
-const CACHE_EXPIRE_TIME = 10000;
+const CACHE_EXPIRE_TIME = 100000000;
 
 type CachedRecItem = {
   word: string;

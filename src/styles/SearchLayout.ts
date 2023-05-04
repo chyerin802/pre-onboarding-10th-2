@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const SearchLayOut = styled.div`
   width: 100%;
   min-height: 100vh;
-  padding-top: 100px;
+  padding-top: 5rem;
   background-color: var(--bg-color);
 
   > h1 {
