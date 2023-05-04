@@ -16,7 +16,6 @@ function SearchInputBox() {
   const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchWord(event.target.value);
     setSelectedItem(-1);
-    setRecommendedItems([]);
   };
 
   // 검색어 form 제출 시 실행되는 onSubmit 핸들러 함수
@@ -73,6 +72,8 @@ function SearchInputBox() {
         if (searchName.length !== 0) {
           const res = await getRecommendedItemListAPI(searchName);
           setRecommendedItems(res);
+        } else {
+          setRecommendedItems([]);
         }
       } catch (e) {
         console.error(e);
