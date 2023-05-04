@@ -12,12 +12,10 @@ const useDebounce = (value: any, delay = 500) => {
 
   useEffect(() => {
     const id = setTimeout(() => {
-      console.log('setting new timeout');
       setDebouncedValue(value);
     }, delay);
 
     return () => {
-      console.log('clearing timeout');
       clearTimeout(id);
     };
   }, [value, delay]);
