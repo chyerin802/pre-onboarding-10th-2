@@ -4,7 +4,7 @@ import { RecItem } from '@type/recommendedItem';
 import useDebounce from '@hooks/useDebounce';
 import RecommendedItemList from './RecommendedItemList';
 
-function SearchInputBox() {
+function SearchBar() {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const [recommendedItems, setRecommendedItems] = useState<RecItem[]>([]);
   const [searchWord, setSearchWord] = useState('');
@@ -110,4 +110,4 @@ function SearchInputBox() {
   );
 }
 
-export default SearchInputBox;
+export default SearchBar;
