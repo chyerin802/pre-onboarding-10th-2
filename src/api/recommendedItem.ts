@@ -1,24 +1,24 @@
-import axios from 'axios';
-import { getCachedRecItems, setCachedRecItems } from '@utils/cacheRecItem';
+import { RecItem } from '@type/recommendedItem';
+import CustomCacheStorage from '@service/CacheStorage';
 
+const REC_ITEM_CACHE_KEY = 'rec-item';
+const REC_ITEM_EXPIRY_TIME = 24 * 60 * 60 * 1000; // 1일;
 const GET_REC_ITEMS_ENDPOINT = '/api/v1/search-conditions/';
 
-const getRecommendedItemListAPI = async (name: string) => {
-  const cachedData = getCachedRecItems(name);
+const RecItemCacheStorage = new CustomCacheStorage(REC_ITEM_CACHE_KEY, REC_ITEM_EXPIRY_TIME);
 
-  if (!cachedData) {
-    try {
-      console.info('calling api');
-      const res = await axios.get(GET_REC_ITEMS_ENDPOINT, { params: { name } });
-      setCachedRecItems(name, res.data);
-      return res.data;
-    } catch (e) {
-      console.error(e);
-      throw e;
-    }
+const getRecommendedItemListAPI = async (name: string) => {
+  // cache open
+  let data: RecItem[] = await RecItemCacheStorage.getMatchData(name);
+
+  if (!data) {
+    console.info('calling api');
+    const apiResponse = await fetch(`${GET_REC_ITEMS_ENDPOINT}?name=${name}`);
+    await RecItemCacheStorage.putData(name, apiResponse);
+    data = await apiResponse.json();
   }
 
-  return cachedData;
+  return data;
 };
 
 export default getRecommendedItemListAPI;
