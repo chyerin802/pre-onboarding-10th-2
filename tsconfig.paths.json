@@ -9,7 +9,8 @@
       "@hoc/*": ["src/hoc/*"],
       "@type/*": ["src/types/*"],
       "@utils/*": ["src/utils/*"],
-      "@styles/*": ["src/styles/*"]
+      "@styles/*": ["src/styles/*"],
+      "@service/*": ["src/service/*"]
     }
   }
 }

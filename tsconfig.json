@@ -24,7 +24,8 @@
       "@hoc/*": ["src/hoc/*"],
       "@type/*": ["src/types/*"],
       "@utils/*": ["src/utils/*"],
-      "@styles/*": ["src/styles/*"]
+      "@styles/*": ["src/styles/*"],
+      "@service/*": ["src/service/*"]
     }
   },
   "include": ["src", "tsconfig.paths.json", "commitlint.config.js", "craco.config.ts", "tailwind.config.js"]
