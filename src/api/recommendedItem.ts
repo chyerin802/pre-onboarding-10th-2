@@ -9,17 +9,23 @@ const RecItemCacheStorage = new CustomCacheStorage(REC_ITEM_CACHE_KEY, REC_ITEM_
 
 const getRecommendedItemListAPI = async (name: string) => {
   const url = `${GET_REC_ITEMS_ENDPOINT}?name=${name}`;
-  // cache open
-  let data: RecItem[] = await RecItemCacheStorage.getMatchData(url);
 
-  if (!data) {
-    console.info('calling api');
-    const apiResponse = await fetch(url);
-    await RecItemCacheStorage.putData(url, apiResponse);
-    data = await apiResponse.json();
+  try {
+    // find cached data
+    let data: RecItem[] = await RecItemCacheStorage.getMatchData(url);
+
+    if (!data) {
+      console.info('calling api');
+      const apiResponse = await fetch(url);
+      await RecItemCacheStorage.putData(url, apiResponse);
+      data = await apiResponse.json();
+    }
+
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
   }
-
-  return data;
 };
 
 export default getRecommendedItemListAPI;
